@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   # GET /carts
   # GET /carts.json
   def index
+    @customer = Customer.find(params["customer_id"])
     @carts = Cart.all
   end
 
@@ -24,7 +25,9 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.new(cart_params)
+    # @cart = Cart.new(cart_params)
+    @customer = Customer.find(params[customer_id])
+    @cart = @customer.carts.create(cart_params)
 
     respond_to do |format|
       if @cart.save
